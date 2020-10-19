@@ -1,0 +1,20 @@
+.sidebar .nav li.active > a:not([data-toggle="collapse"]):before, .off-canvas-sidebar .nav li.active > a:not([data-toggle="collapse"]):before {
+    content: " ";
+    position: absolute;
+    height: 100%;
+    width: 2px;
+    top: 0 !important;
+    background: white;
+    border-radius: 0;
+}
+.sidebar .nav li.active > a:not([data-toggle="collapse"]):before, .off-canvas-sidebar .nav li.active > a:not([data-toggle="collapse"]):before {
+    top: 0;
+    left: 0;
+}
+
+.sidebar .nav li > a, .off-canvas-sidebar .nav li > a {
+    font-size: 14px;
+    padding: 10px 8px;
+    font-weight: 600 !important;
+    text-transform: capitalize;
+}
