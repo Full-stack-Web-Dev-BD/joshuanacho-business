@@ -1,4 +1,7 @@
+import Axios from "axios";
+import { resetWarningCache } from "prop-types";
 import React from "react";
+import { Link } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -8,28 +11,113 @@ import {
   CardTitle,
   Table,
   Row,
-  Col
+  Col,
+  Button
 } from "reactstrap";
 
 class Tables extends React.Component {
+  state = {
+    xlData: [],
+    status: 'Import From XLSX',
+    xllength: 0,
+    uploadStatus: 'Upload Data to Database ',
+    uploaded: false,
+    fileName:''
+  }
+  fileChangeHandler(e) {
+    e.preventDefault()
+    this.setState({ status: "Reading XLXS ..." })
+    const fData = new FormData()
+    fData.append('file', e.target.files[0])
+    Axios.post('/import-data-from-xlsx', fData)
+      .then(res => {
+        this.setState({
+          xlData: res.data.result,
+          status: 'Import Again',
+          xllength: res.data.result.length,
+          fileName:res.data.fileName
+        })
+      })
+      .catch(err => {
+        return console.log(err);
+      })
+  }
+  uploadData() {
+    Axios.post('/importData',{fileName:this.state.fileName})
+
+    // this.setState({ uploadStatus: 'Uploading ...' })
+    // setTimeout(() => {
+    //   this.setState({
+    //     xlData: [],
+    //     status: "Import From XLSX",
+    //     xllength: 0,
+    //     uploadStatus: 'Upload Data to Database ',
+    //     uploaded: true
+    //   })
+    // }, 400);
+  }
+
   render() {
     return (
       <>
         <div className="content">
           <Row>
             <Col md="12">
-              <Card>
+              <Card className="p-4">
                 <CardHeader>
-                  <CardTitle tag="h4">Simple Table</CardTitle>
+                  <CardTitle tag="h2">Read Data From XLSX {this.state.xllength ? ('( Founded   ' + this.state.xllength + ' Transection)') : ''}  </CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Table className="tablesorter" responsive>
+                  {
+                    this.state.uploaded ? '' :
+                      <div className="text-right">
+                        <Button color="primary" size="sm" className="mr-auto" onClick={e => document.getElementById('importxl').click()}> {this.state.status} </Button>
+                        <input onChange={e => this.fileChangeHandler(e)} accept=".xlsx" type="file" style={{ display: 'none' }} id="importxl" />
+                        {/* <i className="tim-icons icon-attach-87"></i> */}
+                      </div>
+                  }
+                  {
+                    this.state.xlData.length > 0 ?
+                      <div className="text-center pt-5 pb-5">
+                        <div className="upload-zone">
+                          <i style={{ fontSize: '100px' }} className="tim-icons icon-cloud-upload-94"></i>
+                        </div>
+                        <Button color="primary" size="sm" className="mr-auto" onClick={e => this.uploadData()}> {this.state.uploadStatus}</Button>
+                      </div>
+                      : ''
+                  }
+                  {
+                    this.state.uploaded ?
+                      <div className="text-center pt-5 pb-5">
+                        <div className="upload-zone">
+                          <i style={{ fontSize: '100px' }} className="tim-icons icon-cloud-upload-94"></i>
+                        </div>
+                        <p className="text-center text-info"><b>Data Uploaded to Dashboard</b></p>
+                        <Link to='/admin/dashboard'>
+                          <Button color="primary" size="sm" className="mr-auto"> Go to Dashboard </Button>
+                        </Link>
+                      </div>
+                      : ''
+                  }
+                  {/* <Table className="tablesorter" responsive>
                     <thead className="text-primary">
                       <tr>
-                        <th>Name</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th className="text-center">Salary</th>
+                        <th>Title</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Rating</th>
+                        <th>Rating Count</th>
+                        <th>Promotion Price</th>
+                        <th>Promotion %</th>
+                        <th>Insert Date</th>
+                        <th>Current Price</th>
+                        <th>Current Price Date</th>
+                        <th>Old Price </th>
+                        <th>Old Price Date</th>
+                        <th>Price Change %</th>
+                        <th>Seller Information</th>
+                        <th>Url</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -39,108 +127,8 @@ class Tables extends React.Component {
                         <td>Oud-Turnhout</td>
                         <td className="text-center">$36,738</td>
                       </tr>
-                      <tr>
-                        <td>Minerva Hooper</td>
-                        <td>Curaçao</td>
-                        <td>Sinaai-Waas</td>
-                        <td className="text-center">$23,789</td>
-                      </tr>
-                      <tr>
-                        <td>Sage Rodriguez</td>
-                        <td>Netherlands</td>
-                        <td>Baileux</td>
-                        <td className="text-center">$56,142</td>
-                      </tr>
-                      <tr>
-                        <td>Philip Chaney</td>
-                        <td>Korea, South</td>
-                        <td>Overland Park</td>
-                        <td className="text-center">$38,735</td>
-                      </tr>
-                      <tr>
-                        <td>Doris Greene</td>
-                        <td>Malawi</td>
-                        <td>Feldkirchen in Kärnten</td>
-                        <td className="text-center">$63,542</td>
-                      </tr>
-                      <tr>
-                        <td>Mason Porter</td>
-                        <td>Chile</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$78,615</td>
-                      </tr>
-                      <tr>
-                        <td>Jon Porter</td>
-                        <td>Portugal</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$98,615</td>
-                      </tr>
                     </tbody>
-                  </Table>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md="12">
-              <Card className="card-plain">
-                <CardHeader>
-                  <CardTitle tag="h4">Table on Plain Background</CardTitle>
-                  <p className="category">Here is a subtitle for this table</p>
-                </CardHeader>
-                <CardBody>
-                  <Table className="tablesorter" responsive>
-                    <thead className="text-primary">
-                      <tr>
-                        <th>Name</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th className="text-center">Salary</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Dakota Rice</td>
-                        <td>Niger</td>
-                        <td>Oud-Turnhout</td>
-                        <td className="text-center">$36,738</td>
-                      </tr>
-                      <tr>
-                        <td>Minerva Hooper</td>
-                        <td>Curaçao</td>
-                        <td>Sinaai-Waas</td>
-                        <td className="text-center">$23,789</td>
-                      </tr>
-                      <tr>
-                        <td>Sage Rodriguez</td>
-                        <td>Netherlands</td>
-                        <td>Baileux</td>
-                        <td className="text-center">$56,142</td>
-                      </tr>
-                      <tr>
-                        <td>Philip Chaney</td>
-                        <td>Korea, South</td>
-                        <td>Overland Park</td>
-                        <td className="text-center">$38,735</td>
-                      </tr>
-                      <tr>
-                        <td>Doris Greene</td>
-                        <td>Malawi</td>
-                        <td>Feldkirchen in Kärnten</td>
-                        <td className="text-center">$63,542</td>
-                      </tr>
-                      <tr>
-                        <td>Mason Porter</td>
-                        <td>Chile</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$78,615</td>
-                      </tr>
-                      <tr>
-                        <td>Jon Porter</td>
-                        <td>Portugal</td>
-                        <td>Gloucester</td>
-                        <td className="text-center">$98,615</td>
-                      </tr>
-                    </tbody>
-                  </Table>
+                  </Table> */}
                 </CardBody>
               </Card>
             </Col>
@@ -150,5 +138,4 @@ class Tables extends React.Component {
     );
   }
 }
-
 export default Tables;

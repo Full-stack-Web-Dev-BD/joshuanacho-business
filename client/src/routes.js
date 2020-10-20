@@ -22,8 +22,8 @@ var routes = [
   },
   {
     path: "/create",
-    name: "Create Record",
-    icon: "tim-icons icon-tap-02",
+    name: "Import Record",
+    icon: "tim-icons icon-attach-87",
     component: TableList,
     layout: "/admin"
   },
