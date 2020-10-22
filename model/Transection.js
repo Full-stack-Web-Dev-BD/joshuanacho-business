@@ -1,5 +1,4 @@
 const mongoose=require('mongoose')
-const { schema } = require('./chartPointModel')
 const Schema=mongoose.Schema
 
 const TransectionSchema=new Schema({
@@ -11,9 +10,9 @@ const TransectionSchema=new Schema({
     rating:String,
     sellerInformation:String,
     currentPrice:Number,
-    currentPriceDate:Date,
+    currentPriceDate:String,
     oldPrice:Number,
-    oldPriceDate:Date,
+    oldPriceDate:String,
     priceChange:Number,
     url:String,
 })

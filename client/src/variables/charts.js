@@ -51,7 +51,7 @@ let chart1_2_options = {
 // #########################################
 // // // used inside src/views/Dashboard.js
 // #########################################
-let chartExample1 = {
+let salesChart = {
   data1: canvas => {
     let ctx = canvas.getContext("2d");
 
@@ -398,7 +398,7 @@ const chartExample4 = {
 };
 
 module.exports = {
-  chartExample1, // in src/views/Dashboard.js
+  salesChart, // in src/views/Dashboard.js
   chartExample2, // in src/views/Dashboard.js
   chartExample3, // in src/views/Dashboard.js
   chartExample4 // in src/views/Dashboard.js

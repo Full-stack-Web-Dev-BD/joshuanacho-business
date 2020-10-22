@@ -3,34 +3,38 @@ const xlsxj = require("xlsx-to-json");
 
 
 module.exports = {
-    createTransection(req, res){
-        xlsxj({
-            input:`./uploads/1603225014909blanksheets.xlsx`,
-            output: "./uploads/output.json"
-        }, function (err, result) {
-            if (err) {
-                return res.status(500).json({ message: "Out or range" })
-            } else {  console.error('File not found')
-                for (let i = 0; i < 10; i++) {
-                    console.log('added');
-                   let element=result[i]
-                    new Transection({
-                        product:element.product,
-                        brand:element.brand,
-                        category:element.category,
-                        description:element.description,
-                        rating:element.rating,
-                        sellerInformation:element['seller information'],
-                        currentPrice:element['current price'],
-                        currentPriceDate:element['current price date'],
-                        oldPrice:element['old price'],
-                        oldPriceDate:element['old price date'],
-                        priceChange:element['price change %'],
-                        url:element.url,
-                    }) 
-                }
-                return res.json({ message:"Saved"})
-            }
-        });
+    createTransection(req, res) {
+
+        let filePath = `../uploads/${req.body.fileName}`
+        const fData = require(`../uploads/${req.body.fileName}`)
+        async function importToDB() {
+            let pushDb = fData.map(async element => {
+                await new Transection({
+                    product: element.product,
+                    brand: element.brand,
+                    category: element.category,
+                    description: element.description,
+                    rating: element.rating,
+                    sellerInformation: element['seller information'],
+                    currentPrice: element['current price'],
+                    currentPriceDate: element['current price date'],
+                    oldPrice: element['old price'],
+                    oldPriceDate: element['old price date'],
+                    priceChange: element['price change %'],
+                    url: element.url,
+                })
+                    .save()
+                    .then(doc => {
+                        console.log('added');
+                    })
+                    .catch(err => {
+                        return console.log(err);
+                    })
+            })
+            await Promise.all(pushDb)
+            // console.log('done');
+            return res.status(200).json({message:"Uploaded"})
+        }
+        importToDB()
     }
 }

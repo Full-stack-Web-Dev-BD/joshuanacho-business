@@ -33,7 +33,7 @@ class Tables extends React.Component {
       .then(res => {
         this.setState({
           xlData: res.data.result,
-          status: 'Import Again',
+          status: 'Import Another one (insted of this file)',
           xllength: res.data.result.length,
           fileName:res.data.fileName
         })
@@ -43,18 +43,17 @@ class Tables extends React.Component {
       })
   }
   uploadData() {
+    this.setState({ uploadStatus: 'Uploading ...' })
     Axios.post('/importData',{fileName:this.state.fileName})
-
-    // this.setState({ uploadStatus: 'Uploading ...' })
-    // setTimeout(() => {
-    //   this.setState({
-    //     xlData: [],
-    //     status: "Import From XLSX",
-    //     xllength: 0,
-    //     uploadStatus: 'Upload Data to Database ',
-    //     uploaded: true
-    //   })
-    // }, 400);
+    .then(res=>{
+      this.setState({
+        xlData: [],
+        status: "Import From XLSX",
+        xllength: 0,
+        uploadStatus: 'Upload Data to Database ',
+        uploaded: true
+      })
+    })
   }
 
   render() {
@@ -92,7 +91,7 @@ class Tables extends React.Component {
                         <div className="upload-zone">
                           <i style={{ fontSize: '100px' }} className="tim-icons icon-cloud-upload-94"></i>
                         </div>
-                        <p className="text-center text-info"><b>Data Uploaded to Dashboard</b></p>
+                        <p className="text-center text-info"><b>Data Uploaded to Database</b></p>
                         <Link to='/admin/dashboard'>
                           <Button color="primary" size="sm" className="mr-auto"> Go to Dashboard </Button>
                         </Link>

@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
 
 const storage2 = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './controller/uploads/')
+        cb(null, './uploads/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now().toString() + file.originalname)
@@ -76,24 +76,24 @@ app.post('/uploadPP', upload.single('file'), (req, res) => {
 })
 
 app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
-    console.log('file got');
     xlsxj({
-        input: `./controller/uploads/${req.file.filename}`,
-        output: "./controller/uploads/output.json"
+        input: `./uploads/${req.file.filename}`,
+        output: `./uploads/${req.file.filename}.json`
     }, function (err, result) {
         if (err) {
             return res.status(500).json({ message: "Out or range" })
         } else {
             try {
-                fs.unlinkSync('./uploads/output.json')
-                // fs.unlinkSync(`./uploads/${req.file.filename}`)
+                // fs.unlinkSync('./uploads/output.json')
+                fs.unlinkSync(`./uploads/${req.file.filename}`)
             } catch (err) {
                 console.error('File not found')
             }
             console.log('response send');
 
+            console.log({ fileName: `${req.file.filename}.json` });
             // return res.json(removes)
-            return res.json({ result: result, fileName: req.file.filename })
+            return res.json({ result: result, fileName: `${req.file.filename}.json` })
         }
     });
 })
