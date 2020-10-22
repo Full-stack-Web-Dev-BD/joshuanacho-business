@@ -31,6 +31,8 @@ class Tables extends React.Component {
     fData.append('file', e.target.files[0])
     Axios.post('/import-data-from-xlsx', fData)
       .then(res => {
+        console.log(res.data);
+        return
         this.setState({
           xlData: res.data.result,
           status: 'Import Another one (insted of this file)',

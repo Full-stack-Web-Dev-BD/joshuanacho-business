@@ -7,11 +7,12 @@ const cors = require('cors')
 const multer = require('multer')
 const mailer = require('./mailer')
 const userRouter = require('./router/userRouter')
-const transection =require('./router/transection')
+const transection = require('./router/transection')
 const path = require('path')
 const userModel = require('./model/userModel')
 const xlsxj = require("xlsx-to-json");
-const fs = require('fs')
+var XLSX = require('xlsx');
+const Transection = require('./model/Transection')
 
 
 
@@ -76,6 +77,45 @@ app.post('/uploadPP', upload.single('file'), (req, res) => {
 })
 
 app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
+    var workbook = XLSX.readFile(`./uploads/${req.file.filename}`,{cellDates:true});
+    var sheet_name_list = workbook.SheetNames;
+    let result=XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
+
+    async function importToDB() {
+        let pushDb = result.map(async element => {
+
+            // let validDate = `${ind[1] + '/' + ind[0] + '/' + ind[2]}`
+            // let validDate = `${ind[1] + '/' + ind[0] + '/' + ind[2]}`
+            console.log(typeof(element['insert date']))
+            await new Transection({
+                insertDate: element['insert date'],
+                product: element.product,
+                brand: element.brand,
+                category: element.category,
+                description: element.description,
+                rating: element.rating,
+                sellerInformation: element['seller information'],
+                currentPrice: element['current price'],
+                currentPriceDate: element['current price date'],
+                oldPrice: element['old price'],
+                oldPriceDate: element['old price date'],
+                priceChange: element['price change %'],
+                url: element.url,
+            })
+                .save()
+                .then(doc => {
+                    // console.log('added');
+                })
+                .catch(err => {
+                    return console.log(err);
+                })
+        })
+        await Promise.all(pushDb)
+        // console.log('done');
+        return res.status(200).json({ message: "Uploaded" })
+    }
+    importToDB()
+    return
     xlsxj({
         input: `./uploads/${req.file.filename}`,
         output: `./uploads/${req.file.filename}.json`
@@ -83,12 +123,13 @@ app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
         if (err) {
             return res.status(500).json({ message: "Out or range" })
         } else {
-            try {
-                // fs.unlinkSync('./uploads/output.json')
-                fs.unlinkSync(`./uploads/${req.file.filename}`)
-            } catch (err) {
-                console.error('File not found')
-            }
+            console.log(result);
+            // try {
+            //     // fs.unlinkSync('./uploads/output.json')
+            //     // fs.unlinkSync(`./uploads/${req.file.filename}`)
+            // } catch (err) {
+            //     console.error('File not found')
+            // }
             console.log('response send');
 
             console.log({ fileName: `${req.file.filename}.json` });

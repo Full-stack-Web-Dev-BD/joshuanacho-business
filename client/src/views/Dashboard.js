@@ -48,15 +48,13 @@ class Dashboard extends React.Component {
           <Row>
             <Col xs="12">
               <Card className="card-chart">
-                <CardHeader>
-                  <Row>
-                    <Col className="text-left" sm="6">
-                      {/* <h5 className="card-category">Chart 1</h5> */}
-                      <CardTitle tag="h2">
-                    <i className="tim-icons icon-bell-55 icon-coins"/>
-                    </CardTitle>
-                    </Col>
-                  </Row>
+                
+              <CardHeader>
+                  <h5 className="card-category">Chart 2</h5>
+                  <CardTitle tag="h1">
+                    <i className="tim-icons icon-coins text-info" />{" "}
+                    Sales
+                  </CardTitle>
                 </CardHeader>
                 <CardBody>
                   {/* <div className="chart-area">

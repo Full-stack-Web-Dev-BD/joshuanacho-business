@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 const Schema=mongoose.Schema
 
 const TransectionSchema=new Schema({
-    
+    insertDate:Date,
     product:String,
     brand:String,
     category:String,
