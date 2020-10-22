@@ -41,79 +41,87 @@ module.exports = {
         importToDB()
     },
     filterSales(req, res) {
-        Transection.find({ insertDate: { $gt: new Date(`${new Date().getFullYear()}-01-01T08:36:40.950Z`),$lt: new Date(`${new Date().getFullYear()}-05-01T08:36:40.950Z`) } })
-        .then(rl => {
-            console.log(rl);
-            // gotData.push({ thisMont: rl })
-        })
-        .catch(err => {
-            console.log(err);
-        })
-        return
-        let allMonth=[
 
-            {monthName:'January',inDate:`${new Date().getFullYear()}-01-01T08:36:40.950Z`},
-            {monthName:'February',inDate:`${new Date().getFullYear()}-02-01T08:36:40.950Z`},
-            {monthName:'March',inDate:`${new Date().getFullYear()}-03-01T08:36:40.950Z`},
-            {monthName:'April',inDate:`${new Date().getFullYear()}-04-01T08:36:40.950Z`},
-            {monthName:'May',inDate:`${new Date().getFullYear()}-05-01T08:36:40.950Z`},
-            {monthName:'June',inDate:`${new Date().getFullYear()}-06-01T08:36:40.950Z`},
-            {monthName:'July',inDate:`${new Date().getFullYear()}-07-01T08:36:40.950Z`},
-            {monthName:'August',inDate:`${new Date().getFullYear()}-08-01T08:36:40.950Z`},
-            {monthName:'September',inDate:`${new Date().getFullYear()}-09-01T08:36:40.950Z`},
-            {monthName:'October',inDate:`${new Date().getFullYear()}-10-01T08:36:40.950Z`},
-            {monthName:'November',inDate:`${new Date().getFullYear()}-11-01T08:36:40.950Z`},
-            {monthName:'December',inDate:`${new Date().getFullYear()}-12-01T08:36:40.950Z`},
+        function daysInMonth(month) {
+            return new Date(new Date().getFullYear(), month, 0).getDate();
+        }
+        let allMonth = [
+            { monthName: 'January', gt: `${new Date().getFullYear()}-01-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-01-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'February', gt: `${new Date().getFullYear()}-02-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-02-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'March', gt: `${new Date().getFullYear()}-03-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-03-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'April', gt: `${new Date().getFullYear()}-04-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-04-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'May', gt: `${new Date().getFullYear()}-05-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-05-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'June', gt: `${new Date().getFullYear()}-06-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-06-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'July', gt: `${new Date().getFullYear()}-07-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-07-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'August', gt: `${new Date().getFullYear()}-08-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-08-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'September', gt: `${new Date().getFullYear()}-09-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-09-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'October', gt: `${new Date().getFullYear()}-10-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-10-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'November', gt: `${new Date().getFullYear()}-11-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-11-${daysInMonth(12)}T08:36:40.950Z` },
+            { monthName: 'December', gt: `${new Date().getFullYear()}-12-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-12-${daysInMonth(12)}T08:36:40.950Z` },
         ]
-        let gotData = []
+        let filteredData = {
+            January:[],
+            February:[],
+            March:[],
+            April:[],
+            May:[],
+            June:[],
+            July:[],
+            August:[],
+            September:[],
+            October:[],
+            November:[],
+            December:[]
+    }
         async function collectData() {
-            allMonth.map(async el=>{
-                await Transection.find({ insertDate: { $gt: new Date(`${new Date().getFullYear()}-01-01T08:36:40.950Z`),$lt: new Date(`${new Date().getFullYear()}-11-01T08:36:40.950Z`) } })
+
+            let filterData = allMonth.map(async el => {
+                await Transection.find({ insertDate: { $gt: new Date(el.gt), $lt: new Date(el.lt) } })
                     .then(rl => {
-                        gotData.push({ thisMont: rl })
+                        if(el.monthName=="January"){
+                            filteredData.January.push(rl)
+                        }
+                        if(el.monthName=="February"){
+                            filteredData.February.push(rl)
+                        }
+                        if(el.monthName=="March"){
+                            filteredData.March.push(rl)
+                        }
+                        if(el.monthName=="April"){
+                            filteredData.April.push(rl)
+                        }
+                        if(el.monthName=="May"){
+                            filteredData.May.push(rl)
+                        }
+                        if(el.monthName=="June"){
+                            filteredData.June.push(rl)
+                        }
+                        if(el.monthName=="July"){
+                            filteredData.July.push(rl)
+                        }
+                        if(el.monthName=="August"){
+                            filteredData.August.push(rl)
+                        }
+                        if(el.monthName=="September"){
+                            filteredData.September.push(rl)
+                        }
+                        if(el.monthName=="October"){
+                            filteredData.October.push(rl)
+                        }
+                        if(el.monthName=="November"){
+                            filteredData.November.push(rl)
+                        }
+                        if(el.monthName=="December"){
+                            filteredData.December.push(rl)
+                        }
                     })
                     .catch(err => {
                         console.log(err);
                     })
             })
+            await Promise.all(filterData)
+            return res.status(200).json(filteredData)
         }
-
-        
-        
-        
-        return
-        Transection.find()
-            .then(transection => {
-                console.log(transection.length);
-                let thisYear = new Date().getFullYear()
-                var getDaysInMonth = function (year, month) {
-                    return new Date(year, month, 0).getDate();
-                };
-                const insertTime = (inTime) => {
-                    return new Date(inTime).getTime()
-                }
-                let janStart = new Date(thisYear + '/' + '01' + '/' + '01').getTime()
-                let janEnd = new Date(thisYear + '/' + '01' + '/' + `0${getDaysInMonth(thisYear, 1)}`)
-                let janList = []
-
-
-                let octStart = new Date(thisYear + '/' + '10' + '/' + '01').getTime()
-                let octEnd = new Date(thisYear + '/' + '10' + '/' + `0${getDaysInMonth(thisYear, 1)}`)
-                let octList = []
-
-
-                transection.map(el => {
-                    if (insertTime(el.insertDate) >= janStart && insertTime(el.insertDate) <= janEnd) {
-                        console.log('founeded');
-                    }
-                    if (insertTime(el.insertDate) >= octStart && insertTime(el.insertDate) <= octEnd) {
-                        console.log('octabor');
-                    }
-
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        collectData()
     }
 }
