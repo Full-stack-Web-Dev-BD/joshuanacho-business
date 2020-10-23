@@ -7,9 +7,9 @@ class Footer extends React.Component {
     return (
       <footer className="footer">
         <Container fluid>
-          <Nav>
+          {/* <Nav>
             <NavItem>
-              <NavLink >Creative Tim</NavLink>
+              <NavLink > New</NavLink>
             </NavItem>
             <NavItem>
               <NavLink >About Us</NavLink>
@@ -17,7 +17,7 @@ class Footer extends React.Component {
             <NavItem>
               <NavLink>Blog</NavLink>
             </NavItem>
-          </Nav>
+          </Nav> */}
         </Container>
       </footer>
     );

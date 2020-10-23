@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import {
-  Button,
   Collapse,
   DropdownToggle,
   DropdownMenu,
@@ -16,7 +15,6 @@ import {
   Container,
   Modal
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {logout}from '../../store/actions/authAction'
 
@@ -124,7 +122,7 @@ class AdminNavbar extends React.Component {
                     <span className="d-lg-none d-md-block">Search</span>
                   </Button> */}
                 </InputGroup>
-                <UncontrolledDropdown nav>
+                {/* <UncontrolledDropdown nav>
                   <DropdownToggle
                     caret
                     color="default"
@@ -147,7 +145,7 @@ class AdminNavbar extends React.Component {
                       </DropdownItem>
                     </NavLink>
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
                 <UncontrolledDropdown nav>
                   <DropdownToggle
                     caret

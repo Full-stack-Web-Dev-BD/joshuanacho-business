@@ -32,12 +32,14 @@ import BudgetChart from "variables/BudgetChart";
 import CurrentPriceChart from "variables/CurrentPriceChart";
 import PriceChangeChart from "variables/PriceChangeChart";
 import { connect } from "react-redux";
+import Axios from "axios";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bigChartData: "data1"
+      bigChartData: "data1",
+      thisMonthTransection:[[]]
     };
   }
   setBgChartData = name => {
@@ -45,6 +47,15 @@ class Dashboard extends React.Component {
       bigChartData: name
     });
   };
+  componentDidMount(){
+    Axios.get('/thismonthtransection')
+    .then(res=>{
+      this.setState({thisMonthTransection:res.data})
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  }
   render() {
     return (
       <>
@@ -152,41 +163,45 @@ class Dashboard extends React.Component {
                 </CardBody>
               </Card>
             </Col>
+            
             <Col lg="6" md="12">
-              <Card>
+              <Card className="card-tasks">
                 <CardHeader>
-                  <CardTitle tag="h4">Simple Table</CardTitle>
+                  <h6 className="title d-inline">Transection Of This Month({this.state.thisMonthTransection[0].length})</h6>
+                  <p className="card-category d-inline"> This Month</p>
                 </CardHeader>
                 <CardBody>
-                  <Table>
-                    <thead>
-                      <tr>
-                        <th>Brand</th>
-                        <th>Category</th>
-                        <th>Current Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {
-                        console.log(this.props.transection.thisMonthTransection)
-                        // this.props.transection.thisMonthTransection.map(el => {
-                        //   return (
-                        //     <tr>
-                        //       <td>
-                        //         <p className="text-muted">{el.brand}</p>
-                        //       </td>
-                        //       <td>
-                        //         <p className="text-muted">{el.category}</p>
-                        //       </td>
-                        //       <td>
-                        //         <p className="text-muted">{el.currentPrice}</p>
-                        //       </td>
-                        //     </tr>
-                        //   )
-                        // })
-                      }
-                    </tbody>
-                  </Table>
+                  <div className="table-full-width table-responsive">
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Brand</th>
+                          <th>Category</th>
+                          <th>Current Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          // console.log(this.props.transection.sevenDaysHistory)
+                          this.state.thisMonthTransection[0].map(el => {
+                            return (
+                              <tr>
+                                <td>
+                                  <p className="text-muted">{el.brand}</p>
+                                </td>
+                                <td>
+                                  <p className="text-muted">{el.category}</p>
+                                </td>
+                                <td>
+                                  <p className="text-muted">{el.currentPrice}</p>
+                                </td>
+                              </tr>
+                            )
+                          })
+                        }
+                      </tbody>
+                    </Table>
+                  </div>
                 </CardBody>
               </Card>
             </Col>

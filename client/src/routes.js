@@ -1,5 +1,6 @@
 import Dashboard from "views/Dashboard.js";
 import Icons from "views/Icons.js";
+import ImportData from "views/ImportData";
 import Notifications from "views/Notifications.js";
 import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
@@ -13,18 +14,18 @@ var routes = [
     component: Dashboard,
     layout: "/admin"
   },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "tim-icons icon-bell-55",
-    component: Notifications,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "tim-icons icon-bell-55",
+  //   component: Notifications,
+  //   layout: "/admin"
+  // },
   {
     path: "/create",
     name: "Import Record",
     icon: "tim-icons icon-attach-87",
-    component: TableList,
+    component: ImportData,
     layout: "/admin"
   },
   {
@@ -41,19 +42,19 @@ var routes = [
     component: UserProfile,
     layout: "/admin"
   },
-  {
-    path: "/icons",
-    name: "Test Page 1",
-    icon: "tim-icons icon-atom",
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "test page 2",
-    icon: "tim-icons icon-align-center",
-    component: Typography,
-    layout: "/admin"
-  }
+  // {
+  //   path: "/icons",
+  //   name: "Test Page 1",
+  //   icon: "tim-icons icon-atom",
+  //   component: Icons,
+  //   layout: "/admin"
+  // },
+  // {
+  //   path: "/typography",
+  //   name: "test page 2",
+  //   icon: "tim-icons icon-align-center",
+  //   component: Typography,
+  //   layout: "/admin"
+  // }
 ];
 export default routes;
