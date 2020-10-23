@@ -6,6 +6,7 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import routes from "routes.js";
 import { setInitialData,logout } from '../../store/actions/authAction'
+import {loadTransection} from '../../store/actions/transectionAction'
 import logo from "assets/img/react-logo.png";
 import { connect } from "react-redux";
 import JwtDecode from "jwt-decode";
@@ -26,6 +27,8 @@ class Admin extends React.Component {
     if (token) {
       let decoded = JwtDecode(token)
       this.props.setInitialData(decoded)
+      this.props.loadTransection()
+
     }else{
       this.props.logout(this.props.history)
     }
@@ -136,6 +139,7 @@ class Admin extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  filteredTransection:state.transection
 })
-export default connect(mapStateToProps, { setInitialData,logout })(Admin);
+export default connect(mapStateToProps, { setInitialData,logout ,loadTransection})(Admin);

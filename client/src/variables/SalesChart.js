@@ -1,14 +1,34 @@
 import React, { Component } from 'react'
 import { Line, Bar } from "react-chartjs-2";
+import { connect } from 'react-redux';
 
 export class SalesChart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          bigChartData: "data1"
+          bigChartData: "data1",
+          labels: [
+            "JAN",
+            "FEB",
+            "MAR",
+            "APR",
+            "MAY",
+            "JUN",
+            "JUL",
+            "AUG",
+            "SEP",
+            "OCT",
+            "NOV",
+            "DEC"
+          ],
         };
+        this.returnMunth=this.returnMunth.bind(this)
       }
-      
+      returnMunth(){
+        let month=this.state.labels
+        month.length=new Date().getMonth()+1
+        return month
+      }
     render() {
         
       let chart1_2_options = {
@@ -72,20 +92,7 @@ export class SalesChart extends Component {
           gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
       
           return {
-            labels: [
-              "JAN",
-              "FEB",
-              "MAR",
-              "APR",
-              "MAY",
-              "JUN",
-              "JUL",
-              "AUG",
-              "SEP",
-              "OCT",
-              "NOV",
-              "DEC"
-            ],
+            labels: [...this.returnMunth()],
             datasets: [
               {
                 label: "My First dataset",
@@ -102,7 +109,7 @@ export class SalesChart extends Component {
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
                 pointRadius: 4,
-                data: [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100]
+                data: [0, 0, 0, 0, 0, 5, 90, 130, 70, 115, 60, 130]
               }
             ]
           };
@@ -147,7 +154,7 @@ export class SalesChart extends Component {
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
                 pointRadius: 4,
-                data: [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120]
+                data: [0, 0, 0, 0, 0, 5, 90, 130, 70, 115, 60, 130]
               }
             ]
           };
@@ -162,20 +169,7 @@ export class SalesChart extends Component {
           gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
       
           return {
-            labels: [
-              "JAN",
-              "FEB",
-              "MAR",
-              "APR",
-              "MAY",
-              "JUN",
-              "JUL",
-              "AUG",
-              "SEP",
-              "OCT",
-              "NOV",
-              "DEC"
-            ],
+            labels: [...this.returnMunth()],
             datasets: [
               {
                 label: "My First dataset",
@@ -192,7 +186,7 @@ export class SalesChart extends Component {
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
                 pointRadius: 4,
-                data: [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
+                data: [0, 0, 0, 0, 0, 5, 90, 130, 70, 115, 60, 130]
               }
             ]
           };
@@ -213,4 +207,7 @@ export class SalesChart extends Component {
     }
 }
 
-export default SalesChart
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+export default connect ()(SalesChart)

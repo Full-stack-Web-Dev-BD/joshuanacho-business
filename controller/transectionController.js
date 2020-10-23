@@ -40,7 +40,7 @@ module.exports = {
         }
         importToDB()
     },
-    filterSales(req, res) {
+    filterTransectionByMonth(req, res) {
 
         function daysInMonth(month) {
             return new Date(new Date().getFullYear(), month, 0).getDate();
