@@ -3,6 +3,7 @@ import { Line, Bar } from "react-chartjs-2";
 import { connect } from 'react-redux';
 
 export class SalesChart extends Component {
+  
     constructor(props) {
         super(props);
         this.state = {
@@ -109,7 +110,7 @@ export class SalesChart extends Component {
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
                 pointRadius: 4,
-                data: [0, 0, 0, 0, 0, 5, 90, 130, 70, 115, 60, 130]
+                data: [...this.props.transection.countTransection]
               }
             ]
           };
@@ -154,7 +155,8 @@ export class SalesChart extends Component {
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
                 pointRadius: 4,
-                data: [0, 0, 0, 0, 0, 5, 90, 130, 70, 115, 60, 130]
+                data: [...this.props.transection.countTransection]
+                
               }
             ]
           };
@@ -186,7 +188,8 @@ export class SalesChart extends Component {
                 pointHoverRadius: 4,
                 pointHoverBorderWidth: 15,
                 pointRadius: 4,
-                data: [0, 0, 0, 0, 0, 5, 90, 130, 70, 115, 60, 130]
+                data: [...this.props.transection.countTransection]
+                
               }
             ]
           };
@@ -208,6 +211,6 @@ export class SalesChart extends Component {
 }
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  transection: state.transection
 })
-export default connect ()(SalesChart)
+export default connect (mapStateToProps)(SalesChart)

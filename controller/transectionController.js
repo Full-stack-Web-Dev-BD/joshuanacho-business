@@ -60,58 +60,58 @@ module.exports = {
             { monthName: 'December', gt: `${new Date().getFullYear()}-12-01T08:36:40.950Z`, lt: `${new Date().getFullYear()}-12-${daysInMonth(12)}T08:36:40.950Z` },
         ]
         let filteredData = {
-            January:[],
-            February:[],
-            March:[],
-            April:[],
-            May:[],
-            June:[],
-            July:[],
-            August:[],
-            September:[],
-            October:[],
-            November:[],
-            December:[]
-    }
+            January: [],
+            February: [],
+            March: [],
+            April: [],
+            May: [],
+            June: [],
+            July: [],
+            August: [],
+            September: [],
+            October: [],
+            November: [],
+            December: []
+        }
         async function collectData() {
 
             let filterData = allMonth.map(async el => {
                 await Transection.find({ insertDate: { $gt: new Date(el.gt), $lt: new Date(el.lt) } })
                     .then(rl => {
-                        if(el.monthName=="January"){
+                        if (el.monthName == "January") {
                             filteredData.January.push(rl)
                         }
-                        if(el.monthName=="February"){
+                        if (el.monthName == "February") {
                             filteredData.February.push(rl)
                         }
-                        if(el.monthName=="March"){
+                        if (el.monthName == "March") {
                             filteredData.March.push(rl)
                         }
-                        if(el.monthName=="April"){
+                        if (el.monthName == "April") {
                             filteredData.April.push(rl)
                         }
-                        if(el.monthName=="May"){
+                        if (el.monthName == "May") {
                             filteredData.May.push(rl)
                         }
-                        if(el.monthName=="June"){
+                        if (el.monthName == "June") {
                             filteredData.June.push(rl)
                         }
-                        if(el.monthName=="July"){
+                        if (el.monthName == "July") {
                             filteredData.July.push(rl)
                         }
-                        if(el.monthName=="August"){
+                        if (el.monthName == "August") {
                             filteredData.August.push(rl)
                         }
-                        if(el.monthName=="September"){
+                        if (el.monthName == "September") {
                             filteredData.September.push(rl)
                         }
-                        if(el.monthName=="October"){
+                        if (el.monthName == "October") {
                             filteredData.October.push(rl)
                         }
-                        if(el.monthName=="November"){
+                        if (el.monthName == "November") {
                             filteredData.November.push(rl)
                         }
-                        if(el.monthName=="December"){
+                        if (el.monthName == "December") {
                             filteredData.December.push(rl)
                         }
                     })
@@ -119,8 +119,52 @@ module.exports = {
                         console.log(err);
                     })
             })
+
+            const returnMonthName = () => {
+                let id = new Date().getMonth()+1
+                if (id == 1) {
+                    return "January"
+                }
+                if (id == 2) {
+                    return "February"
+                }
+                if (id == 3) {
+                    return "March"
+                }
+                if (id == 4) {
+                    return "April"
+                }
+                if (id == 5) {
+                    return "May"
+                }
+                if (id == 6) {
+                    return "June"
+                }
+                if (id == 7) {
+                    return "July"
+                }
+                if (id == 8) {
+                    return "August"
+                }
+                if (id == 9) {
+                    return "September"
+                }
+                if (id == 10) {
+                    return "October"
+                }
+                if (id == 11) {
+                    return "November"
+                }
+                if (id == 12) {
+                    return "December"
+                }
+            }
+            console.log(returnMonthName());
             await Promise.all(filterData)
+            let thisMonthTransection = filteredData[returnMonthName()]
+            // return res.json(thisMonthTransection)
             return res.status(200).json(filteredData)
+            // return res.status(200).json({filteredData:filteredData,thisMonthTransection:thisMonthTransection})
         }
         collectData()
     }
