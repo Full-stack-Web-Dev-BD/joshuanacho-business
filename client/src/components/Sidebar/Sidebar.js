@@ -71,7 +71,7 @@ class Sidebar extends React.Component {
             onClick={this.props.toggleSidebar}
           >
             <div className="logo-img">
-              <img src={logo.imgSrc} alt="react-logo" />
+              <img src={logo.imgSrc} alt="Load" />
             </div>
           </Link>
         );
@@ -126,8 +126,8 @@ class Sidebar extends React.Component {
                 href="/admin/dashboard"
                 style={{display:'flex'}}
               >
-                <img src={require('../../assets/img/logo.jpg')} style={{width:'70px'}}/>
-                <p style={{lineHeight:'70px' ,fontSize:'22px ',fontWeight:'500'}}>Load</p>
+                <img src={logo.loadingSrc} alt="load" style={{width:'80px',height:'80px'}} />
+                <p style={{lineHeight:'80px' ,fontSize:'22px ',fontWeight:'500'}}>{logo.text}</p>
               </ReactstrapNavLink>
             </li>
           </Nav>

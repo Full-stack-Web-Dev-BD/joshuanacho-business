@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-
 import { Line, Bar } from "react-chartjs-2";
+import html2canvas from 'html2canvas'
+import pdfConverter from 'jspdf'
 import { connect } from 'react-redux';
 export class PriceChangeChart extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.returnPriceChanges=this.returnPriceChanges.bind(this)
+        this.returnPriceChanges = this.returnPriceChanges.bind(this)
     }
     returnPriceChanges() {
-        let transection= []
+        let transection = []
         transection.push(this.props.transection.sevenDaysHistory[0].totalPriceChange)
         transection.push(this.props.transection.sevenDaysHistory[1].totalPriceChange)
         transection.push(this.props.transection.sevenDaysHistory[2].totalPriceChange)
@@ -18,8 +19,10 @@ export class PriceChangeChart extends Component {
         transection.push(this.props.transection.sevenDaysHistory[6].totalPriceChange)
         return transection.reverse()
     }
+
+
     render() {
-       let  chartExample4 = {
+        let chartExample4 = {
             data: canvas => {
                 let ctx = canvas.getContext("2d");
 
@@ -120,4 +123,4 @@ export class PriceChangeChart extends Component {
 const mapStateToProps = state => ({
     transection: state.transection,
 })
-export default connect(mapStateToProps) (PriceChangeChart)
+export default connect(mapStateToProps)(PriceChangeChart)

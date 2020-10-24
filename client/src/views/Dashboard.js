@@ -1,6 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { Line, Bar } from "react-chartjs-2";
+import Pdf from "react-to-pdf"
 import {
   Button,
   ButtonGroup,
@@ -22,11 +23,6 @@ import {
 } from "reactstrap";
 
 // core components
-import {
-  chartExample2,
-  chartExample3,
-  chartExample4
-} from "variables/charts.js";
 import SalesChart from "variables/SalesChart";
 import BudgetChart from "variables/BudgetChart";
 import CurrentPriceChart from "variables/CurrentPriceChart";
@@ -34,6 +30,14 @@ import PriceChangeChart from "variables/PriceChangeChart";
 import { connect } from "react-redux";
 import Axios from "axios";
 
+
+
+const options = {
+  unit: "in",
+  format: [1500, window.screen.width]
+};
+
+const ref=React.createRef()
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -56,23 +60,44 @@ class Dashboard extends React.Component {
       console.log(err);
     })
   }
+  
+  printC1(toPdf){
+    let st=document.getElementById('tbRow')
+    st.style.display='none'
+    toPdf()
+    st.style.display='block'
+    
+  }
+
   render() {
     return (
       <>
-        <div className="content">
-          <Row>
+        <div className="content"  ref={ref} >
+          <div id="pdfContent" >
+          <Row >
             <Col xs="12">
               <Card className="card-chart">
 
                 <CardHeader>
-                  <h5 className="card-category">Chart 2</h5>
+                  <h5 className="card-category">Included Monthly Basis Information and Progress</h5>
                   <CardTitle tag="h2">
                     <i className="tim-icons icon-coins text-info" />{" "}
                     Sales
+                    
+                <Pdf targetRef={ref} filename="code-example.pdf" options={options}>
+                    {({ toPdf }) => 
+                    <Button  onClick={e=>this.printC1(toPdf)} className="btn-icon btn-round btn-default" >
+                      <a  style={{color:'white'}} >
+                        < i className="tim-icons icon-cloud-download-93" />
+                      </a>
+                    </Button>}
+                </Pdf>
                   </CardTitle>
                 </CardHeader>
                 <CardBody>
+                  <div  >
                   <SalesChart />
+                  </div>
                 </CardBody>
               </Card>
             </Col>
@@ -120,8 +145,9 @@ class Dashboard extends React.Component {
               </Card>
             </Col>
           </Row>
+          </div>
 
-          <Row>
+          <Row id='tbRow'>
             <Col lg="6" md="12">
               <Card className="card-tasks">
                 <CardHeader>

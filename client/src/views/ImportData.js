@@ -1,6 +1,7 @@
 import Axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import loading from "assets/img/loading1.gif";
 
 // reactstrap components
 import {
@@ -21,41 +22,42 @@ class ImportData extends React.Component {
     xllength: 0,
     uploadStatus: 'Upload Data to Database ',
     uploaded: false,
-    fileName:''
+    fileName: '',
+    uploading:false
   }
   fileChangeHandler(e) {
     e.preventDefault()
-    this.setState({ status: "Reading XLXS ..." })
+    this.setState({ status: "Please Wait Reading XLXS ...",uploading:true })
     const fData = new FormData()
     fData.append('file', e.target.files[0])
     Axios.post('/import-data-from-xlsx', fData)
       .then(res => {
-        console.log(res.data);
-        return
-        this.setState({
-          xlData: res.data.result,
-          status: 'Import Another one (insted of this file)',
-          xllength: res.data.result.length,
-          fileName:res.data.fileName
-        })
+        window.location.href='/admin/dashboard'
+        // this.setState({
+        //   xlData: [],
+        //   status: "Import From XLSX",
+        //   xllength: 0,
+        //   uploadStatus: 'Upload Data to Database ',
+        //   uploaded: true
+        // })
       })
       .catch(err => {
         return console.log(err);
       })
   }
-  uploadData() {
-    this.setState({ uploadStatus: 'Uploading ...' })
-    Axios.post('/importData',{fileName:this.state.fileName})
-    .then(res=>{
-      this.setState({
-        xlData: [],
-        status: "Import From XLSX",
-        xllength: 0,
-        uploadStatus: 'Upload Data to Database ',
-        uploaded: true
-      })
-    })
-  }
+  // uploadData() {
+  //   this.setState({ uploadStatus: 'Uploading ...' })
+  //   Axios.post('/importData', { fileName: this.state.fileName })
+  //     .then(res => {
+  //       this.setState({
+  //         xlData: [],
+  //         status: "Import From XLSX",
+  //         xllength: 0,
+  //         uploadStatus: 'Upload Data to Database ',
+  //         uploaded: true
+  //       })
+  //     })
+  // }
 
   render() {
     return (
@@ -77,16 +79,6 @@ class ImportData extends React.Component {
                       </div>
                   }
                   {
-                    this.state.xlData.length > 0 ?
-                      <div className="text-center pt-5 pb-5">
-                        <div className="upload-zone">
-                          <i style={{ fontSize: '100px' }} className="tim-icons icon-cloud-upload-94"></i>
-                        </div>
-                        <Button color="primary" size="sm" className="mr-auto" onClick={e => this.uploadData()}> {this.state.uploadStatus}</Button>
-                      </div>
-                      : ''
-                  }
-                  {
                     this.state.uploaded ?
                       <div className="text-center pt-5 pb-5">
                         <div className="upload-zone">
@@ -96,6 +88,16 @@ class ImportData extends React.Component {
                         <Link to='/admin/dashboard'>
                           <Button color="primary" size="sm" className="mr-auto"> Go to Dashboard </Button>
                         </Link>
+                      </div>
+                      : ''
+                  }
+                  {
+                    this.state.uploading ?
+                      <div className="text-center pt-5 pb-5">
+                        <div className="upload-zone text-center">
+                          <img src={loading} />
+                        </div>
+                        <p className="text-center text-info"><b>Uploading and reading xlsx Plase wait </b></p>
                       </div>
                       : ''
                   }

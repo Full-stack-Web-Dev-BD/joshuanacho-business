@@ -86,7 +86,6 @@ app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
 
             // let validDate = `${ind[1] + '/' + ind[0] + '/' + ind[2]}`
             // let validDate = `${ind[1] + '/' + ind[0] + '/' + ind[2]}`
-            console.log(typeof(element['insert date']))
             await new Transection({
                 insertDate: element['insert date'],
                 product: element.product,
@@ -115,44 +114,17 @@ app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
         return res.status(200).json({ message: "Uploaded" })
     }
     importToDB()
-    return
-    xlsxj({
-        input: `./uploads/${req.file.filename}`,
-        output: `./uploads/${req.file.filename}.json`
-    }, function (err, result) {
-        if (err) {
-            return res.status(500).json({ message: "Out or range" })
-        } else {
-            console.log(result);
-            // try {
-            //     // fs.unlinkSync('./uploads/output.json')
-            //     // fs.unlinkSync(`./uploads/${req.file.filename}`)
-            // } catch (err) {
-            //     console.error('File not found')
-            // }
-            console.log('response send');
-
-            console.log({ fileName: `${req.file.filename}.json` });
-            // return res.json(removes)
-            return res.json({ result: result, fileName: `${req.file.filename}.json` })
-        }
-    });
 })
 
 
-// If no API routes are hit, send the build version of the React client
 app.use(express.static(path.join(__dirname, './client/build')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
-// app.use(express.static(path.join(__dirname,'./client/build')))
-// app.get('*',(req,res)=>{
-//     res.sendFile(path.join(__dirname,'./client/build/index.html'))
-// })
 app.listen(PORT, (req, res) => {
     console.log('Server started on port ', PORT)
-    mongoos.connect('mongodb://localhost/load', { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }, (err => {
+    mongoos.connect('mongodb+srv://user:user@mern.a77ou.mongodb.net/load-application?retryWrites=true&w=majority', { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }, (err => {
         if (err) {
             console.log(err)
             return

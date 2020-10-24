@@ -25,6 +25,11 @@ class Login extends React.Component {
 
   componentDidMount() {
     document.body.classList.add("white-content");
+    
+    let token = window.localStorage.getItem('load-token')
+    if (token) {
+      window.location.href='/admin/dashboard'
+    }
   }
   setBgChartData = name => {
     this.setState({

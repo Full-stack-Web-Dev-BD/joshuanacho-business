@@ -8,6 +8,8 @@ import routes from "routes.js";
 import { setInitialData,logout } from '../../store/actions/authAction'
 import {loadTransection} from '../../store/actions/transectionAction'
 import logo from "assets/img/react-logo.png";
+import loading from "assets/img/loading.gif";
+import bell from "assets/img/bell.gif";
 import { connect } from "react-redux";
 import JwtDecode from "jwt-decode";
 
@@ -28,7 +30,6 @@ class Admin extends React.Component {
       let decoded = JwtDecode(token)
       this.props.setInitialData(decoded)
       this.props.loadTransection()
-
     }else{
       this.props.logout(this.props.history)
     }
@@ -108,8 +109,9 @@ class Admin extends React.Component {
             bgColor={this.state.backgroundColor}
             logo={{
               outterLink: "/admin/dashbard",
-              text: "Load",
-              imgSrc: logo
+              text: Object.keys(this.props.filteredTransection.filteredTransection).length<1?' Loading ... ':'LOAD',
+              imgSrc: Object.keys(this.props.filteredTransection.filteredTransection).length<1?loading:logo,
+              loadingSrc: Object.keys(this.props.filteredTransection.filteredTransection).length<1?bell:logo,
             }}
             toggleSidebar={this.toggleSidebar}
           />
