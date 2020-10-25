@@ -48,7 +48,7 @@ class UserProfile extends React.Component {
       name: name ? name : user.name,
       email: email ? email : user.email,
       aboutMe: aboutMe ? aboutMe : user.aboutMe,
-      uid:user._id,
+      uid: user._id,
       currentPassword,
       newPassword
     }
@@ -67,8 +67,8 @@ class UserProfile extends React.Component {
                 </CardHeader>
                 <CardBody>
                   {
-                    this.props.auth.error.message?
-                    <p className={this.props.auth.error.type==="error"?"text-danger text-bold ":"text-bold text-success"}> <b> { this.props.auth.error.message }</b> </p>:''
+                    this.props.auth.error.message ?
+                      <p className={this.props.auth.error.type === "error" ? "text-danger text-bold " : "text-bold text-success"}> <b> {this.props.auth.error.message}</b> </p> : ''
                   }
                   <Form >
                     <Row>
@@ -153,7 +153,7 @@ class UserProfile extends React.Component {
                     <div className="block block-two" />
                     <div className="block block-three" />
                     <div className="block block-four" />
-                    {
+                    {/* {
                       user.pp ?
                         <div>
                           <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -173,19 +173,31 @@ class UserProfile extends React.Component {
                             <img
                               alt="..."
                               className="avatar"
-                              src={require("assets/img/default-pp.png")}
+                              src="../uploads/default-pp.png"
                             />
                             <h5 className="title">{this.state.status}</h5>
                           </a>
                           <input accept="image/x-png, image/gif, image/jpeg" onChange={e => this.fileChangeHandler(e)} type="file" style={{ display: 'none' }} id="upp" />
                         </div>
-                    }
+                    } */}
+
+                    <div>
+                      <a href="#pablo">
+                        <img
+                          alt="..."
+                          className="avatar"
+                          src={require("../uploads/default.png")}
+                        />
+                        {/* <h5 className="title">{this.state.status}</h5> */}
+                      </a>
+                      {/* <input accept="image/x-png, image/gif, image/jpeg" onChange={e => this.fileChangeHandler(e)} type="file" style={{ display: 'none' }} id="upp" /> */}
+                    </div>
                     <p className="description text-capitalize"> {user.name} </p>
                   </div>
                   <div className="card-description">
                     {
                       user.aboutMe ?
-                        <p className="text-center">{user.aboutMe }</p>:
+                        <p className="text-center">{user.aboutMe}</p> :
                         <div className="text-center">
                           <Button onClick={e => { document.getElementById('aboutMe').focus() }} className="btn-fill" size="sm" color="primary" type="submit">Add Yourself</Button>
                         </div>
@@ -195,17 +207,17 @@ class UserProfile extends React.Component {
                 <CardFooter>
                   <div className="button-container">
                     <Button className="btn-icon btn-round" color="facebook">
-                      <a  style={{color:'white'}} target="_blank" href="https://facebook.com">
-                      <i className="fab fa-facebook" />
+                      <a style={{ color: 'white' }} target="_blank" href="https://facebook.com">
+                        <i className="fab fa-facebook" />
                       </a>
                     </Button>
                     <Button className="btn-icon btn-round" color="twitter">
-                    <a  style={{color:'white'}} target="_blank" href="https://twitter.com/">
-                      <i className="fab fa-twitter" />
+                      <a style={{ color: 'white' }} target="_blank" href="https://twitter.com/">
+                        <i className="fab fa-twitter" />
                       </a>
                     </Button>
                     <Button className="btn-icon btn-round" color="google">
-                      <a  style={{color:'white'}} target="_blank" href="https://myaccount.google.com">
+                      <a style={{ color: 'white' }} target="_blank" href="https://myaccount.google.com">
                         < i className="fab fa-google-plus" />
                       </a>
                     </Button>

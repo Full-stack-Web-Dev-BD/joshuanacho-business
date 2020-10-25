@@ -77,9 +77,9 @@ app.post('/uploadPP', upload.single('file'), (req, res) => {
 })
 
 app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
-    var workbook = XLSX.readFile(`./uploads/${req.file.filename}`,{cellDates:true});
+    var workbook = XLSX.readFile(`./uploads/${req.file.filename}`, { cellDates: true });
     var sheet_name_list = workbook.SheetNames;
-    let result=XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
+    let result = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]])
 
     async function importToDB() {
         let pushDb = result.map(async element => {
@@ -116,6 +116,7 @@ app.post('/import-data-from-xlsx', upload2.single('file'), (req, res) => {
     importToDB()
 })
 
+app.use("/uploads", express.static("uploads"));
 
 app.use(express.static(path.join(__dirname, './client/build')));
 app.get('*', (req, res) => {
@@ -125,6 +126,7 @@ app.get('*', (req, res) => {
 app.listen(PORT, (req, res) => {
     console.log('Server started on port ', PORT)
     mongoos.connect('mongodb+srv://user:user@mern.a77ou.mongodb.net/loadapplication?retryWrites=true&w=majority', { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }, (err => {
+        // mongoos.connect('mongodb://localhost/ajebaje', { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true }, (err => {
         if (err) {
             console.log(err)
             return

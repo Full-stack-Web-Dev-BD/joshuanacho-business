@@ -155,12 +155,13 @@ class AdminNavbar extends React.Component {
                     onClick={e => e.preventDefault()}
                   >
                     <div className="photo">
-                      {
+                      {/* {
                         this.props.auth.user.pp?
                       <img alt="..." src={require(`../../../uploads/${this.props.auth.user.pp}`)} />
                         :
                       <img alt="..." src={require("assets/img/default-avatar.png")} />
-                      }
+                      } */}
+                      <img alt="..." src={require("assets/img/default-avatar.png")} />
                     </div>
                     <b className="caret d-none d-lg-block d-xl-block" />
                     <p className="d-lg-none">Log out</p>

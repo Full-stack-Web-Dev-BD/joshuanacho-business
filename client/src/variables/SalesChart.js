@@ -96,7 +96,7 @@ export class SalesChart extends Component {
             labels: [...this.returnMunth()],
             datasets: [
               {
-                label: "My First dataset",
+                label: "Sales in This Position ",
                 fill: true,
                 backgroundColor: gradientStroke,
                 borderColor: "#1f8ef1",
@@ -141,7 +141,7 @@ export class SalesChart extends Component {
             ],
             datasets: [
               {
-                label: "My First dataset",
+                label: "Sales in This Position ",
                 fill: true,
                 backgroundColor: gradientStroke,
                 borderColor: "#1f8ef1",
@@ -174,7 +174,7 @@ export class SalesChart extends Component {
             labels: [...this.returnMunth()],
             datasets: [
               {
-                label: "My First dataset",
+                label: "Sales in This Position ",
                 fill: true,
                 backgroundColor: gradientStroke,
                 borderColor: "#1f8ef1",

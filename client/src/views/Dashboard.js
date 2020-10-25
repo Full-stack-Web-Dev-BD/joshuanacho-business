@@ -106,7 +106,7 @@ class Dashboard extends React.Component {
             <Col lg="4">
               <Card className="card-chart">
                 <CardHeader>
-                  <h5 className="card-category">Chart 2</h5>
+                  <h5 className="card-category">Order Chart included 4 month record </h5>
                   <CardTitle tag="h2">
                     <i className="tim-icons icon-delivery-fast  text-danger" />{" "}
                     Orders
@@ -120,7 +120,7 @@ class Dashboard extends React.Component {
             <Col lg="4">
               <Card className="card-chart">
                 <CardHeader>
-                  <h5 className="card-category">Chart 3</h5>
+                <h5 className="card-category">Current Price showing depending on last 7 days </h5>
                   <CardTitle tag="h2">
                     <i className="tim-icons icon-money-coins text-success" />{" "}
                     Current Price
@@ -134,7 +134,7 @@ class Dashboard extends React.Component {
             <Col lg="4">
               <Card className="card-chart">
                 <CardHeader>
-                  <h5 className="card-category">Chart 4 </h5>
+                  <h5 className="card-category">Price change showing depending on last 7 days </h5>
                   <CardTitle tag="h2">
                     <i className="tim-icons icon-send text-success" />Price Change
                   </CardTitle>
